@@ -2,6 +2,7 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import numpy as np
 from transformers import AutoTokenizer
+from tqdm import tqdm
 
 def split_passage_per_link(passage):
     assert passage[-1] != '>', 'The split passage must be impair'
@@ -27,7 +28,7 @@ def create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, 
 
     X = []
     y = []
-    for article in articles:
+    for article in tqdm(articles, desc='Data processing...'):
         passages = article.split('\n')[1:]
         for passage in passages:
             text = ""
