@@ -24,11 +24,9 @@ def create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, 
 
     articles = data.split('\n\n')
 
-    print('Number of articles: ', len(articles))
-
     X = []
     y = []
-    for article in tqdm(articles, desc='Data processing...'):
+    for article in tqdm(articles[:num_articles], desc='Data processing...'):
         passages = article.split('\n')[1:]
         for passage in passages:
             text = ""
