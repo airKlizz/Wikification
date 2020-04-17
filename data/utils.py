@@ -40,25 +40,6 @@ def process_passage(passage):
             assert False, 'Content type not known: '+str(type(content))
     return _clean_passage(processed_passage)
 
-def add_split_passage(url, filename):
-    try:
-        html = get_html(url)
-    except:
-        print('Request impossible to the url: {}'.format(url))
-        return
-    passages = get_raw_passages(html)
-    with open(filename, 'a') as f:
-        for passage in passages:
-            passage = process_passage(passage)
-            try:
-                split_passage, labels = split_passage_per_link(passage)
-            except:
-                print('ERROR: The split passage must be impair')
-                continue
-            for p, l in zip(split_passage, labels):
-                f.write('{}\t{}\n'.format(p.replace('\n', ' '), l))
-            f.write('\n')
-
 def add_article(url, filename):
     try:
         html = get_html(url)
