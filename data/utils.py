@@ -25,8 +25,11 @@ def process_passage(passage):
             processed_passage += str(content)
         elif type(content) == Tag:
             if content.name == 'a':
-                if '/wiki/' in content.attrs["href"]:
-                    processed_passage += '<a>{}</a>'.format(content.text)
+                if 'href' in content.attrs.keys():
+                    if '/wiki/' in content.attrs["href"]:
+                        processed_passage += '<a>{}</a>'.format(content.text)
+                    else:
+                        processed_passage += str(content.text)
                 else:
                     processed_passage += str(content.text)
             else:
