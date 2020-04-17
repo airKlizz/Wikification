@@ -7,8 +7,7 @@ from tqdm import tqdm
 def split_passage_per_link(passage):
     assert passage[-1] != '>', 'The split passage must be impair'
     split_passage = [string_2 for string_1 in passage.split('<a>') for string_2 in string_1.split('</a>')]
-    if passage[0] == '<': pattern = [0, 1]
-    else: pattern = [1, 0]
+    pattern = [1, 0]
     labels = [pattern[1]]
     for _ in range(int((len(split_passage)-1)/2)):
         labels += pattern
@@ -53,7 +52,18 @@ def create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, 
                     inputs['attention_mask'],
                     inputs['token_type_ids']
             ])
-            y.append(pad_to_max_length(y_, max_length))
+            y_ = pad_to_max_length(y_, max_length)
+            y.append(y_)
+
+            ''' Display token which are labelled 1 '''
+            '''
+            print('\nNew passage:\n{}\n\n'.format(passage))
+            tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'], skip_special_tokens=False)
+            for tok, label in zip(tokens, y_):
+                if label == 1:
+                    print('{}'.format(tok), end=' - ')
+            print('\n')
+            '''
 
     train_X, validation_X, train_y, validation_y = train_test_split(X, y, random_state=random_state, test_size=test_size)
     train_dataset = tf.data.Dataset.from_tensor_slices((train_X, train_y)).shuffle(shuffle).batch(batch_size)
