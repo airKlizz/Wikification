@@ -5,7 +5,7 @@ COMMAND = "Command line: python create_data.py <number of articles> <data filena
 
 def main():
     assert len(sys.argv) == 5, COMMAND
-    num_titles = sys.argv[1]
+    num_titles = int(sys.argv[1])
     filename = sys.argv[2]
     top5000_filename = sys.argv[3] 
     titles_filename = sys.argv[4]
