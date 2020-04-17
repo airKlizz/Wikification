@@ -17,7 +17,7 @@ def split_passage_per_link(passage):
 def pad_to_max_length(labels, max_length):
     return ([0] + labels + [0] * max(0, max_length-len(labels)-1))[:max_length]
 
-def create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, shuffle=10000, random_state=2020):
+def create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, num_articles, shuffle=10000, random_state=2020):
 
     with open(train_path, 'r') as f:
         data = f.read()

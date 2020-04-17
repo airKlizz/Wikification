@@ -11,6 +11,7 @@ parser.add_argument("--train_path", type=str, help="path to the train  file", de
 parser.add_argument("--max_length", type=int, help="max length of the tokenized input", default=256)
 parser.add_argument("--test_size", type=float, help="ratio of the test dataset", default=0.2)
 parser.add_argument("--batch_size", type=int, help="batch size", default=32)
+parser.add_argument("--num_articles", type=int, help="num of articles to train on", default=1000)
 parser.add_argument("--num_labels", type=int, help="number of labels", default=2)
 parser.add_argument("--epochs", type=int, help="number of epochs", default=5)
 parser.add_argument("--learning_rate", type=float, help="learning rate", default=3e-5)
@@ -24,6 +25,7 @@ train_path = args.train_path
 max_length = args.max_length
 test_size = args.test_size
 batch_size = args.batch_size
+num_articles = args.num_articles
 learning_rate = args.learning_rate
 epochs = args.epochs
 filepath = args.filepath
@@ -33,7 +35,7 @@ tokenizer = BertTokenizer.from_pretrained(model_name)
 model = Model(TFBertForTokenClassification.from_pretrained(model_name, num_labels=num_labels))
 
 # create dataset
-train_dataset, validation_dataset = create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size)
+train_dataset, validation_dataset = create_tf_dataset(train_path, tokenizer, max_length, test_size, batch_size, num_articles)
 
 # optimizer, loss and metrics
 optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate, epsilon=1e-08, clipnorm=1.0)
