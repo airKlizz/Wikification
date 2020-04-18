@@ -68,4 +68,6 @@ for epoch in range(epochs):
     print('Epoch {}/{}'.format(epoch, epochs))
     history = model.fit(train_dataset, epochs=1, validation_data=validation_dataset, callbacks=[model_checkpoint])
     metrics = run_evaluation(model, tokenizer, max_length, batch_size, test_data_path, test_gold_path, candidate_path)
+    for metric, value in metrics.items():
+        print('{} - \t{:.3f}'.format(metric, value))
 
