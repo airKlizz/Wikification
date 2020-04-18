@@ -60,12 +60,13 @@ def predict_passage(passage, model, tokenizer, max_length):
   return annote_passage(passage, result, tokenizer)
 
 def predict_passages(passages, model, tokenizer, max_length, batch_size):
+  if passages == "": return passages
   batch_inputs = tokenizer.batch_encode_plus(batch_text_or_text_pairs=passages,
                                 max_length=max_length,
                                 pad_to_max_length=True,
                                 return_token_type_ids=True, 
                                 return_attention_mask=True)
-
+  print(batch_inputs, passages)
   batch_ids = tf.expand_dims(batch_inputs['input_ids'], 1)
   batch_attention_mask = tf.expand_dims(batch_inputs['attention_mask'], 1)
   batch_type_ids = tf.expand_dims(batch_inputs['token_type_ids'], 1)
