@@ -5,7 +5,6 @@ from transformers import AutoTokenizer
 from tqdm import tqdm
 
 def split_passage_per_link(passage):
-    assert passage[-1] != '>', 'The split passage must be impair'
     split_passage = [string_2 for string_1 in passage.split('<a>') for string_2 in string_1.split('</a>')]
     pattern = [1, 0]
     labels = [pattern[1]]
