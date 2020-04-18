@@ -20,8 +20,8 @@ parser.add_argument("--filepath", type=str, help="filename for saving", default=
 parser.add_argument("--test_data_path", type=str, help="path to the test data file", default="data/test.data.txt")
 parser.add_argument("--test_gold_path", type=str, help="path to the test gold file", default="data/test.gold.txt")
 parser.add_argument("--candidate_path", type=str, help="path to the candidate file", default="data/candidate.txt")
-parser.add_argument("--weight_for_0", type=int, help="weight_for_0", default=1)
-parser.add_argument("--weight_for_1", type=int, help="weight_for_1", default=1)
+parser.add_argument("--weight_for_0", type=float, help="weight_for_0", default=1.)
+parser.add_argument("--weight_for_1", type=float, help="weight_for_1", default=1.)
 args = parser.parse_args()
 
 # parameters
