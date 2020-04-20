@@ -109,3 +109,14 @@ def create_data(num_titles, filename, top5000_filename='top5000_wikipedia', titl
     titles = get_titles(num_titles, top5000_filename, titles_filename)
     for title in tqdm(titles):
         add_article('https://en.wikipedia.org/wiki/{}'.format(title), filename)
+
+def create_test(num_articles, test_data_filename, test_gold_filename):
+    for _ in tqdm(range(num_articles)):
+        add_article('https://en.wikipedia.org/wiki/Special:Random', test_gold_filename)
+    with open(test_gold_filename, 'r') as f:
+        data = f.read()
+    data = data.replace('<a>', '')
+    data = data.replace('</a>', '')
+    with open(test_data_filename, 'w') as f:
+        f.write(data)
+    
