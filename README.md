@@ -30,7 +30,7 @@ python train.py --train_path /content/drive/My\ Drive/Github/Wikification/data.t
                   --num_labels 2 \
                   --epochs 4 \
                   --learning_rate 1e-6 \
-                  --filepath /content/drive/My\ Drive/Github/Wikification/weights.{epoch:02d}-{val_loss:.2f}.h5 \
+                  --filepath model/saved_weights/weights.{epoch:02d}-{val_loss:.2f}.h5 \
                   --test_data_path /content/drive/My\ Drive/Github/Wikification/test.data.txt \
                   --test_gold_path /content/drive/My\ Drive/Github/Wikification/test.gold.txt \
                   --candidate_path /content/drive/My\ Drive/Github/Wikification/candidate.txt \
