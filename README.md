@@ -76,12 +76,54 @@ metrics = run_evaluation(model, tokenizer, max_length, batch_size, test_data_pat
 for metric, value in metrics.items():
   print('{} - \t{:.3f}'.format(metric, value))
   
-
+# recall - 	0.271
+# precision - 	0.282
+# f1 - 	0.276
 ```
+
+The metrics are low but the fact that the task is quite subjective may explain this. I did not find other models to compare with my results. If you know, I am interested.
 
 ### Use pre-trained models
 
+```python
 
+''' imports '''
+import tensorflow as tf
+import numpy as np
+from transformers import BertTokenizer, TFBertForTokenClassification
+from model.model import Model
+from evaluation.utils import run_evaluation, predict_passage, get_entities_from_passage
+
+''' parameters '''
+model_name = 'bert-base-cased'
+num_labels = 2
+max_length = 64
+weights_path = 'path/to/weights/file.h5'
+
+''' load model '''
+tokenizer = BertTokenizer.from_pretrained(model_name)
+model = Model(TFBertForTokenClassification.from_pretrained(model_name, num_labels=num_labels)) # need to optimize this step by loading config instead of weights
+model(tf.zeros([1, 3, max_length], tf.int32))
+model.load_weights(weights_path)
+model.compile(run_eagerly=True)
+
+TEXT_TO_WIKIFY = "A Huguenot and officer under Admiral Gaspard de Coligny, \
+Ribault led an expedition to the New World in 1562 that founded the outpost of Charlesfort \
+on Parris Island in present-day South Carolina."
+
+text_wikified = predict_passage(TEXT_TO_WIKIFY, model, tokenizer, max_length)
+entities = get_entities_from_passage(text_wikified)
+
+print(text_wikified)
+# A <a>Huguenot</a> and officer under <a>Admiral Gaspard de Coligny</a> , 
+# <a>Ribault</a> led an expedition to the <a>New World</a> in <a>1562</a> that founded the <a>outpost</a> of <a>Charlesfort</a> 
+# on <a>Parris Island</a> in present <a>-</a> day <a>South Carolina</a> .
+
+print(entities)
+#['Huguenot', 'Admiral Gaspard de Coligny', 'Ribault', 'New World', '1562', 'outpost', 'Charlesfort', 'Parris Island', '-', 'South Carolina']
+
+
+```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
