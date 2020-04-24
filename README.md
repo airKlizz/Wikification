@@ -42,7 +42,7 @@ To see full usage of ``train.py``, run ``python train.py --help``.
 
 ### Evaluation
 
-You need to have downloaded the model weights from [here]().
+You need to have downloaded the model weights from [here](https://github.com/airKlizz/Wikification/releases/download/v1.0-model_weights/weights.loss.0.21.h5).
 
 ```python
 
