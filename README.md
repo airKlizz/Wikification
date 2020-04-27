@@ -125,6 +125,7 @@ print(entities)
 #['Huguenot', 'Admiral Gaspard de Coligny', 'Ribault', 'New World', '1562', 'outpost', 'Charlesfort', 'Parris Island', '-', 'South Carolina']
 
 print([article['title'] for article in articles])
+#['Huguenots', 'Gaspard II de Coligny', 'Jean Ribault', 'New World', '1562', 'Outpost', 'Charlesfort-Santa Elena Site', 'Marine Corps Recruit Depot Parris Island', 'Apostrophe', 'South Carolina']
 ```
 
 ## License
