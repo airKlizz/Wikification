@@ -23,7 +23,7 @@ The train data are composed of the [top 5000 of wikipedia articles of 2019](http
 You need to have downloaded the data files and put them on the ``data/`` folder.
 
 ```
-python train.py --train_path /content/drive/My\ Drive/Github/Wikification/data.txt \
+python train.py --train_path data/data.txt \
                   --max_length 256 \
                   --batch_size 16 \
                   --num_articles 10000 \
@@ -31,9 +31,9 @@ python train.py --train_path /content/drive/My\ Drive/Github/Wikification/data.t
                   --epochs 4 \
                   --learning_rate 1e-6 \
                   --filepath model/saved_weights/weights.{epoch:02d}-{val_loss:.2f}.h5 \
-                  --test_data_path /content/drive/My\ Drive/Github/Wikification/test.data.txt \
-                  --test_gold_path /content/drive/My\ Drive/Github/Wikification/test.gold.txt \
-                  --candidate_path /content/drive/My\ Drive/Github/Wikification/candidate.txt \
+                  --test_data_path data/test.data.txt \
+                  --test_gold_path data/test.gold.txt \
+                  --candidate_path data/candidate.txt \
                   --weight_for_0 0.9 \
                   --weight_for_1 50
 ```
@@ -93,6 +93,7 @@ import numpy as np
 from transformers import BertTokenizer, TFBertForTokenClassification
 from model.model import Model
 from evaluation.utils import run_evaluation, predict_passage, get_entities_from_passage
+from mediawiki.utils import get_articles
 
 ''' parameters '''
 model_name = 'bert-base-cased'
@@ -113,6 +114,7 @@ on Parris Island in present-day South Carolina."
 
 text_wikified = predict_passage(TEXT_TO_WIKIFY, model, tokenizer, max_length)
 entities = get_entities_from_passage(text_wikified)
+articles = get_articles(entities)
 
 print(text_wikified)
 # A <a>Huguenot</a> and officer under <a>Admiral Gaspard de Coligny</a> , 
@@ -122,7 +124,7 @@ print(text_wikified)
 print(entities)
 #['Huguenot', 'Admiral Gaspard de Coligny', 'Ribault', 'New World', '1562', 'outpost', 'Charlesfort', 'Parris Island', '-', 'South Carolina']
 
-
+print([article['title'] for article in articles])
 ```
 
 ## License
