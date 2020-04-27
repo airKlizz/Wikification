@@ -7,7 +7,7 @@ from model.model import Model
 model_name = 'bert-base-cased'
 num_labels = 2
 max_length = 64
-weights_path = 'weights.05-0.69.h5'
+weights_path = 'model/saved_weights/weights.0.21.h5'
 
 ''' load model '''
 tokenizer = BertTokenizer.from_pretrained(model_name)
