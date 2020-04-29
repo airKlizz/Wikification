@@ -93,7 +93,8 @@ import numpy as np
 from transformers import BertTokenizer, TFBertForTokenClassification
 from model.model import Model
 from evaluation.utils import run_evaluation, predict_passage, get_entities_from_passage
-from mediawiki.utils import get_articles
+from bonus.mediawiki import get_articles
+from bonus.concept_extraction import concept_extraction, filename_to_scores_passages
 
 ''' parameters '''
 model_name = 'bert-base-cased'
@@ -107,6 +108,8 @@ model = Model(TFBertForTokenClassification.from_pretrained(model_name, num_label
 model(tf.zeros([1, 3, max_length], tf.int32))
 model.load_weights(weights_path)
 model.compile(run_eagerly=True)
+
+### WIKIFY A TEXT ###
 
 TEXT_TO_WIKIFY = "A Huguenot and officer under Admiral Gaspard de Coligny, \
 Ribault led an expedition to the New World in 1562 that founded the outpost of Charlesfort \
@@ -126,6 +129,17 @@ print(entities)
 
 print([article['title'] for article in articles])
 #['Huguenots', 'Gaspard II de Coligny', 'Jean Ribault', 'New World', '1562', 'Outpost', 'Charlesfort-Santa Elena Site', 'Marine Corps Recruit Depot Parris Island', 'Apostrophe', 'South Carolina']
+
+
+### EXTRACT CONCEPT FROM RANKED PASSAGES ###
+
+topic = 'Moabit a great disctrict in Berlin'
+scores_passages = filename_to_scores_passages('data/passages_example/Moabit_a_great_disctrict_in_Berlin')
+
+concepts = concept_extraction(topic, scores_passages, model, tokenizer, max_length)
+
+print(concepts)
+# ['Mitte', 'spaces', 'U - Bahn', 'eaters', 'shops', 'Charlottenburg', 'Prenzlauer Berg', '1861', 'Spree', 'Central Criminal Court']
 ```
 
 ## License

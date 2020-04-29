@@ -5,7 +5,10 @@ def get_article(entity):
     url_template = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={}&utf8=&format=json&srlimit=1"
     entity = entity.replace(' ', '_')
     url = url_template.format(entity)
-    results = json.loads(requests.get(url).content)
+    try:
+        results = requests.get(url).json()
+    except:
+        return None
     results = results['query']['search']
     if len(results) == 0: return None
     return {'id': results[0]['pageid'], 'title': results[0]['title']}
