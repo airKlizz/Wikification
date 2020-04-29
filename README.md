@@ -133,13 +133,13 @@ print([article['title'] for article in articles])
 
 ### EXTRACT CONCEPT FROM RANKED PASSAGES ###
 
-topic = 'Moabit a great disctrict in Berlin'
-scores_passages = filename_to_scores_passages('data/passages_example/Moabit_a_great_disctrict_in_Berlin')
+topic = 'Livestream during quarantine'
+scores_passages = filename_to_scores_passages('data/passages_example/livestream_during_quarantine')
 
 concepts = concept_extraction(topic, scores_passages, model, tokenizer, max_length)
 
 print(concepts)
-# ['Mitte', 'spaces', 'U - Bahn', 'eaters', 'shops', 'Charlottenburg', 'Prenzlauer Berg', '1861', 'Spree', 'Central Criminal Court']
+# ['Twitch', 'Facebook Live', 'coronavirus pandemic', 'Fans', 'social distancing', 'COVID - 19', 'Instagram', 'streams', 'Stageit', 'Bright Minded']
 ```
 
 ## License
